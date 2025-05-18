@@ -19,7 +19,7 @@ def index(request):
         uploaded_file = request.FILES['file']
         id_type = request.POST.get('idType')
 
-        print(id_type,uploaded_file)
+        # print(id_type,uploaded_file)
 
         # Define the save path
         app_dir = os.path.dirname(os.path.abspath(__file__))
@@ -33,7 +33,7 @@ def index(request):
 
         # print(txt)
         info1 = extract_id_info(txt)
-        print(info1)
+        # print(info1)
         save_id_data(info1)
 
 
