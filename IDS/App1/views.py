@@ -6,7 +6,7 @@ from django.core.files.storage import FileSystemStorage
 from App1.Functions.read import get_texts
 from App1.Functions.extraction_data import extract_id_info
 from App1.Functions.collect import save_id_data
-
+from App1.models import IdentityInfo
 
 
 def home(request):
@@ -44,3 +44,8 @@ def index(request):
         })
 
     return render(request, 'App1/index.html')
+
+
+def identity_table_view(request):
+    identities = IdentityInfo.objects.all()  # Replace with your model
+    return render(request, 'App1/display.html', {'identities': identities})
