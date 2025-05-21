@@ -30,6 +30,7 @@ def index(request):
             for chunk in uploaded_file.chunks():
                 destination.write(chunk)
         txt=get_texts(save_path)
+        print(txt)
 
         # print(txt)
         info1 = extract_id_info(txt)
@@ -40,7 +41,7 @@ def index(request):
 
 
         return render(request, 'App1/index.html', {
-            'message': f"File '{uploaded_file.name}' uploaded successfully as {id_type.upper()}."
+            'message': f"File '{uploaded_file.name}' uploaded successfully "
         })
 
     return render(request, 'App1/index.html')

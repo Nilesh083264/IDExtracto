@@ -3,6 +3,12 @@ import re
 def extract_id_info(text):
     info = {}
 
+    text2 = text.split("\n")
+    # print(text2)
+
+
+
+
     # Aadhaar (12-digit number, often grouped as XXXX XXXX XXXX)
     aadhaar_match = re.search(r'\b(\d{4}\s\d{4}\s\d{4})\b', text)
     if aadhaar_match:
@@ -29,9 +35,15 @@ def extract_id_info(text):
 
     # Name (Assuming "Name: XYZ" or appearing near keywords)
     name_match = re.search(r'(?:Name|Father\'s Name|S/O)\s*[:\-]?\s*([A-Z][a-zA-Z\s]+)', text)
+    for i in text2:
+        name_match2 = re.search(r'[A-Z][a-z]+\s[A-Z][a-z]+\s[A-Z][a-z]+',i)
+        if(name_match2):
+            break
+    # print('Name : ',name_match2.group())
     if name_match:
         info['Name'] = name_match.group(1).strip()
-
+    elif(name_match2):
+        info['Name'] = name_match2.group()
     # Mobile Number
     mobile_match = re.search(r'\b(\+91[-\s]?)?[6-9]\d{9}\b', text)
     if mobile_match:
@@ -43,8 +55,14 @@ def extract_id_info(text):
         info['Pincode'] = pincode_match.group(0)
 
     # Address: very heuristic (could be improved using NLP)
-    address_match = re.search(r'Address\s*[:\-]?\s*(.*?)(?:\n|$)', text, re.IGNORECASE)
+    address_match = re.search(r'Address\s*[:\-]?\s*[\n]*(.*?)(?:\n|$)', text, re.IGNORECASE)
+    print(address_match.group())
     if address_match:
         info['Address'] = address_match.group(1).strip()
 
+    print(info)
+
     return info
+
+
+
